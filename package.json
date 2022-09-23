@@ -1,0 +1,27 @@
+{
+  "name": "threejs-catapult",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "description": "A catapult for three.js",
+  "author": "Glenn Meyer",
+  "dependencies": {
+    "three": "^0.136.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.5.1",
+    "dat.gui": "^0.7.9",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "sass": "^1.45.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.1"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server"
+  }
+}
