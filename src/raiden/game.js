@@ -66,7 +66,9 @@ const createPlane = () => {
 
 for (let i = 0; i <= 6; i++) { queue.push(createPlane()); }
 
-let speed = 1.0;
+let xSpeed = 0.1;
+let ySpeed = 0.1;
+let zSpeed = 1.0;
 const animate = (_time) => {
   const [head] = queue;
 
@@ -76,7 +78,7 @@ const animate = (_time) => {
     queue.push(plane);
   }
 
-  queue.map(p => p.position.set(0, 0, p.position.z + speed));
+  queue.map(p => p.position.set(0, 0, p.position.z + zSpeed));
 
   camera.position.set(0, cameraHeight, dimension / 4);
   camera.lookAt(new Vector3(sphere.position.x, sphere.position.y, sphere.position.z));
@@ -86,43 +88,61 @@ const animate = (_time) => {
 }
 
 window.addEventListener('keydown', ({ key }) => {
-
   switch (key) {
     case 'w':
-      if (speed < 5.0) speed += .1
+      if (zSpeed < 5.0) zSpeed += .1
       if (sphere.position.z > -dimension / 2) {
-        sphere.position.z -= speed
+        sphere.position.z -= zSpeed
       }
       break;
     case 's':
-      if (speed >= 1.0) speed -= .1
+      if (zSpeed >= 1.0) zSpeed -= .1
       if (sphere.position.z < dimension / 50) {
-        sphere.position.z += speed
+        sphere.position.z += zSpeed
       }
       break;
     case 'a':
-      if (sphere.position.x > -dimension / 2) {
-        sphere.position.x -= speed;
+      if (sphere.position.x > -dimension) {
+        xSpeed += .1
+        sphere.position.x -= xSpeed;
       }
       break;
     case 'd':
-      if (sphere.position.x < dimension / 2) {
-        sphere.position.x += speed;
+      if (sphere.position.x < dimension) {
+        xSpeed += .1
+        sphere.position.x += xSpeed;
       }
       break;
     case ' ':
       if (sphere.position.y < 40.0) {
-        sphere.position.y += 0.5;
+        ySpeed += .1
+        sphere.position.y += ySpeed;
         cameraHeight += 0.5;
       }
       break;
     case 'Control':
-      if (sphere.position.y > 4.0) {
-        sphere.position.y -= 0.5;
+      if (sphere.position.y > 5.0) {
+        ySpeed += .1
+        sphere.position.y -= ySpeed;
         cameraHeight -= 0.5;
       }
       break;
   }
 })
-
+window.addEventListener('keyup', ({ key }) => {
+  switch (key) {
+    case 'a':
+      xSpeed = .1;
+      break;
+    case 'd':
+      xSpeed = .1;
+      break;
+    case ' ':
+      ySpeed = .1;
+      break;
+    case 'Control':
+      ySpeed = .1;
+      break;
+  }
+})
 animate();
