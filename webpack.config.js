@@ -1,7 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = {
+  ignoreWarnings: [(warning) => true],
   devServer: {
     static: {
       directory: path.join(__dirname, 'public'),
@@ -11,10 +13,12 @@ module.exports = {
     port: 8080,
     historyApiFallback: true,
   },
-  entry: './src/index.js',
+  entry: {
+    app: './src/index.js',
+  },
   mode: 'development',
   output: {
-    filename: 'main.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
@@ -22,6 +26,9 @@ module.exports = {
       inject: 'body',
       template: './src/index.html',
       filename: 'index.html'
+    }),
+    new InjectManifest({
+      swSrc: './src/service-worker.js',
     })
   ],
   module: {
